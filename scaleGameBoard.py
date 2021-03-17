@@ -65,12 +65,12 @@ class scaleGameBoard(unittest.TestCase):
 
     def print_list(self):
         for a_coin in self.coinList:
-            print(str(a_coin.val) + "\n")
+            print(str(a_coin.val))
 
     def assert_all_coins_displayed(self):
         for i, a_coin in enumerate(self.coinList, 0):
             a_coin.assert_coin_val(str(i))
-            print(str(a_coin.val) + "\n")
+            print(str(a_coin.val))
 
     def assert_and_accept_alert(self, txt):
         alert = self.browser.switch_to.alert
