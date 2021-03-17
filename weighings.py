@@ -12,7 +12,6 @@ class weighings(unittest.TestCase):
         super().__init__()
         self.browser = browser
 
-
     def assert_weighing_label(self, label="Weighings"):
         xpath = self.locators["weighingsLabel"] % label
         label_element = self.browser.find_element(By.XPATH, xpath)
@@ -40,4 +39,3 @@ class weighings(unittest.TestCase):
     def get_text_in_weighted_list(self, list_num):
         item = self.browser.find_elements(By.XPATH, self.locators["weighedList"])[int(list_num) - 1]
         return item.text
-
