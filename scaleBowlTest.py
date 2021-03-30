@@ -76,7 +76,7 @@ class scaleBowlTest(unittest.TestCase):
         if bar_num == 5:
             wrong_num = 4
         gameBoard.coinList[wrong_num].click_it()
-        self.assert_and_accept_alert('Oops! Try Again!')
+        gameBoard.assert_and_accept_alert('Oops! Try Again!')
 
     def test_007_find_fake_bar2(self):
         """ Approach: Three buckets. PUt the coins into three buckets. Weigh first and last bucket, and whichever
