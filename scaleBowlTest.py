@@ -82,7 +82,7 @@ class scaleBowlTest(unittest.TestCase):
     def test_007_find_fake_bar2(self):
         """ Approach: Three buckets. PUt the coins into three buckets. Weigh first and last bucket, and whichever
         is less, weigh it against the second bucket, repeat process until the fake bar is found.
-        Can find bar in <= 2 steps.
+        Can find bar in 2 steps.
         """
         bar_num = gameBoard.find_fake_bar2()
         print("Fake bar is: " + str(bar_num))
@@ -90,7 +90,7 @@ class scaleBowlTest(unittest.TestCase):
 
     def test_008_find_fake_bar3(self):
         """ Approach: Three buckets. Same approach as above, but less repetitive code.
-        Can find bar in <= 2 steps.
+        Can find bar in  2 steps.
         """
         bar_num = gameBoard.find_fake_bar3()
         print("Fake bar is: " + str(bar_num))
