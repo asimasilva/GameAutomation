@@ -128,7 +128,7 @@ class scaleGameBoard(unittest.TestCase):
     def find_fake_bar2(self, start=0, end=8):
         """ Approach: Three buckets. PUt the coins into three buckets. Weigh first and last bucket, and whichever
         is less, weigh it against the second bucket, repeat process until the fake bar is found.
-        Can find bar in <= 2 steps.
+        Can find bar in 2 steps.
         """
         self.click_reset()
         thirds = int(len(self.coinList) / 3)
@@ -171,7 +171,7 @@ class scaleGameBoard(unittest.TestCase):
 
     def find_fake_bar3(self):
         """ Approach: Three buckets. Same approach as above, but less repetitive code.
-        Can find bar in <= 2 steps.
+        Can find bar in 2 steps.
         """
         return self.find_less_third(self.coinList)
 
