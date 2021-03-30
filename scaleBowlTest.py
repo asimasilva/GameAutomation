@@ -68,16 +68,15 @@ class scaleBowlTest(unittest.TestCase):
         print(f"Num of tries taken: {gameBoard.weighings.get_size_of_weighed_list()}")
 
     def test_006_selecting_not_fake_bar(self):
-        def test_find_fake_bar(self):
-            bar_num = gameBoard.find_fake_bar()
-            print("Fake bar is: " + str(bar_num))
-            print(f"Num of tries taken: {gameBoard.weighings.get_size_of_weighed_list()}")
-            # Test clicking the wrong answer
-            wrong_num = 5
-            if bar_num == 5:
-                wrong_num = 4
-            gameBoard.coinList[wrong_num].click_it()
-            self.assert_and_accept_alert('Oops! Try Again!')
+        bar_num = gameBoard.find_fake_bar()
+        print("Fake bar is: " + str(bar_num))
+        print(f"Num of tries taken: {gameBoard.weighings.get_size_of_weighed_list()}")
+        # Test clicking the wrong answer
+        wrong_num = 5
+        if bar_num == 5:
+            wrong_num = 4
+        gameBoard.coinList[wrong_num].click_it()
+        self.assert_and_accept_alert('Oops! Try Again!')
 
     def test_007_find_fake_bar2(self):
         """ Approach: Three buckets. PUt the coins into three buckets. Weigh first and last bucket, and whichever
