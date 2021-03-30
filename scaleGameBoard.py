@@ -79,6 +79,10 @@ class scaleGameBoard(unittest.TestCase):
         alert.accept()
 
     def find_fake_bar(self, start=0, end=8):
+        """ Approach: binary. Split the coinlist in two sections. And weigh each section to find the
+        section with the less weight, and repeat process until the fake bar is found.
+        Can find bar in <= 4 steps.
+        """
         self.click_reset()
         is_mid = (end - start + 1) % 2
         first_half = mid_index = int((end - start) / 2) + start
@@ -120,3 +124,85 @@ class scaleGameBoard(unittest.TestCase):
             return self.find_fake_bar(start, first_half)
         if sign == ">":
             return self.find_fake_bar(second_half, end)
+
+    def find_fake_bar2(self, start=0, end=8):
+        """ Approach: Three buckets. PUt the coins into three buckets. Weigh first and last bucket, and whichever
+        is less, weigh it against the second bucket, repeat process until the fake bar is found.
+        Can find bar in <= 2 steps.
+        """
+        self.click_reset()
+        thirds = int(len(self.coinList) / 3)
+        first_third, second_third, last_third = [], [], []
+        for i in range(0, thirds):
+            first_third.append(self.coinList[i].val)
+        for i in range(thirds, thirds*2):
+            second_third.append(self.coinList[i].val)
+        for i in range(thirds*2, len(self.coinList)):
+            last_third.append(self.coinList[i].val)
+
+        for i in first_third:
+            self.leftScaleBowl.enter_box_val(i, i)
+        for i in last_third:
+            self.rightScaleBowl.enter_box_val(i, i)
+        self.click_weigh()
+        sign = self.get_result()
+        self.weighings.assert_text_in_weighted_list(self.weighings.get_size_of_weighed_list(),
+                                                    f"{first_third} {sign} {last_third}")
+        self.click_reset()
+
+        # If its equal
+        final_third = second_third
+        if sign == "<":
+            final_third = first_third
+        if sign == ">":
+            final_third = last_third
+        self.leftScaleBowl.enter_box_val(final_third[0], final_third[0])
+        self.rightScaleBowl.enter_box_val(final_third[2], final_third[2])
+        self.click_weigh()
+        sign = self.get_result()
+
+        fake_coin = final_third[1]
+        if sign == "<":
+            fake_coin = final_third[0]
+        if sign == ">":
+            fake_coin = final_third[2]
+
+        return fake_coin
+
+    def find_fake_bar3(self):
+        """ Approach: Three buckets. Same approach as above, but less repetitive code.
+        Can find bar in <= 2 steps.
+        """
+        return self.find_less_third(self.coinList)
+
+    def find_less_third(self, section):
+        third_index = int(len(section) / 3)
+        first_third, second_third, last_third = [], [], []
+        for i in range(0, int(third_index)):
+            first_third.append(i)
+        for i in range(int(third_index), int(third_index)*2):
+            second_third.append(i)
+        for i in range(int(third_index)*2, len(section)):
+            last_third.append(i)
+
+        for i in first_third:
+            self.leftScaleBowl.enter_box_val(i, i)
+        for i in last_third:
+            self.rightScaleBowl.enter_box_val(i, i)
+        self.click_weigh()
+        sign = self.get_result()
+        self.weighings.assert_text_in_weighted_list(self.weighings.get_size_of_weighed_list(),
+                                                    f"{first_third} {sign} {last_third}")
+
+        # If its equal
+        final_third = second_third
+        if sign == "<":
+            final_third = first_third
+        if sign == ">":
+            final_third = last_third
+        self.click_reset()
+        if len(final_third) == 1:
+            return final_third[0]
+        return self.find_less_third(final_third)
+
+
